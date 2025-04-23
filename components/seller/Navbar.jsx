@@ -2,6 +2,7 @@ import React from 'react'
 import { assets } from '../../assets/assets'
 import Image from 'next/image'
 import { useAppContext } from '@/context/AppContext'
+import { useClerk } from '@clerk/nextjs'
 
 const Navbar = () => {
 
