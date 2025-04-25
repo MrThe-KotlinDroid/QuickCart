@@ -7,6 +7,9 @@ const ProductCard = ({ product }) => {
 
     const { currency, router } = useAppContext()
 
+    console.log(product.image[0])
+    console.log(assets.heart_icon)
+
     return (
         <div
             onClick={() => { router.push('/product/' + product._id); scrollTo(0, 0) }}

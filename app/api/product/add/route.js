@@ -32,6 +32,8 @@ export async function POST(request) {
 
         const files = formData.getAll('images');
 
+        console.log("Files received:", files);
+
         if (!files || files.length === 0) {
             return NextResponse.json({ success: false, message: 'No files uploaded' });
         }
@@ -46,6 +48,7 @@ export async function POST(request) {
                         { resource_type: 'auto' },
                         (error, result) => {
                             if (error) {
+                                console.error("Cloudinary upload error:", error);
                                 reject(error);
                             } else {
                                 resolve(result);
@@ -57,7 +60,11 @@ export async function POST(request) {
             })
         );
 
-        const images = result.map(result => result.secure_url);
+        console.log("Cloudinary upload results:", result);
+
+        const images = result.map((result) => result.secure_url);
+
+        console.log("Uploaded image URLs:", images);
 
         await connectDB();
         const newProduct = await Product.create({
@@ -67,14 +74,14 @@ export async function POST(request) {
             category,
             price: Number(price),
             offerPrice: Number(offerPrice),
-            images,
+            image: images,
             date: Date.now()
         });
 
         return NextResponse.json({ success: true, message: 'Upload Successful', newProduct });
 
     } catch (error) {
-        // Add return here to ensure a response is sent
+        console.error("Error in product upload:", error);
         return NextResponse.json({ success: false, message: error.message });
     }
 }
