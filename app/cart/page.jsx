@@ -10,6 +10,8 @@ const Cart = () => {
 
   const { products, router, cartItems, addToCart, updateCartQuantity, getCartCount } = useAppContext();
 
+ 
+
   return (
     <>
       <Navbar />
